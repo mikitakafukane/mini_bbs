@@ -23,7 +23,7 @@ if (!empty($_POST)) {
 	}
 
 	if (empty($error)) {
-		$image = data('YmdHis') . $_FILES['image']['name'];
+		$image = date('YmdHis') . $_FILES['image']['name'];
 		move_uploaded_file($_FILES['image']['tmp_name'],'../member_picture/' . $image);
 		$_SESSION['join'] = $_POST;
 		$_SESSION['join']['image'] = $image;
@@ -84,8 +84,11 @@ if($_REQUEST['action'] == 'rewrite' && isset($_SESSION['join'])){
 		<dd>
         	<input type="file" name="image" size="35" value="test"  />
 					<?php if ($error['image'] === 'type'): ?>
-					<p class="error">*　写真などは「.gif」または「.jpg」「.png」の画像を指定してください</p>
+					<p class="error">*写真などは「.gif」または「.jpg」「.png」の画像を指定してください</p>
 					<?php endif; ?>
+					<?php if (!empty($error)): ?>
+						<p class="error">*恐れ入りますが、画像を改めて指定してください</p>
+						<?php endif; ?>
         </dd>
 	</dl>
 	<div><input type="submit" value="入力内容を確認する" /></div>
